@@ -114,7 +114,8 @@ import(
 )
 func main(){
  var a [5]int
- rand.seed(time().Now().Unix())  //为了让每次生成的随机数都不同，先要设置随机种子
+ rand.seed(time().Now().Unix())  //为了让每次生成的随机数都不同，先要设置随机种子。Unix()单位秒，UnixNano单位纳秒
+ //rand.seed(time().Now().UnixNano())    生成的随机数更为分散
  for index,_ :=arrange a{
    a[index]=rand.Intn(100)   //生成 0<= x <100 的随机数
  }
