@@ -7,7 +7,7 @@
 
 未初始化的数组，数值类型默认`0`，布尔类型默认为`false`
 ```
-var a[3]int = [3]int {1,2,3}
+var a [3]int = [3]int {1,2,3}
 var a = [3]int {1,2,3}
 var a = [...]int {1,2,3}
 var a = [...]string {1:"love",0:"I",2:"U"}
@@ -16,7 +16,7 @@ var a[]int   //这种方式是定义切片，即动态数组
 ```
 或者可以省略var，写成：
 ```
-a[3]int ：= [3]int {1,2,3}
+a [3]int ：= [3]int {1,2,3}
 a ：= [3]int {1,2,3}
 a ：= [...]int {1,2,3}
 a ：= [...]string {1:"love",0:"I",2:"U"}
@@ -27,7 +27,7 @@ package main
 import("fmt")
 
 func main(){
-  var a[5]int
+  var a [5]int
   for i:=0;i < len(a);i++{
      fmt.Println("请输入第%d个元素"，i+1)
      fmt.Scanln(&a[i])  //从键盘接收字符，存到数组a中
@@ -42,7 +42,7 @@ func main(){
 
 数组遍历的时候，下标从0开始，越界会报panic
 ```
-var arr[3]int = [3]int {1,2,3}
+var arr [3]int = [3]int {1,2,3}
 for index,value := range arr{
    //不需要index时，可以用_替代
    //index,value是局部遍历，for循环外不可用
@@ -75,7 +75,7 @@ func main(){
 5、**byte类型数组**
 ```
 func main(){
- var a[26]byte
+ var a [26]byte
  for index,_ ：= range a{
    a[i]='A'+byte(i)  //必须是相同的数据类型之间才可以进行加减。'A'+'1' ===>'B','A'+1会报错
  }
