@@ -10,6 +10,13 @@ var a = [3]int {1,2,3}
 var a = [...]int {1,2,3}
 var a = [...]string {1:"love",0:"I",2:"U"}
 ```
+或者可以省略var，写出：
+```
+a[3]int ：= [3]int {1,2,3}
+a ：= [3]int {1,2,3}
+a ：= [...]int {1,2,3}
+a ：= [...]string {1:"love",0:"I",2:"U"}
+```
 2、**数组地址问题**
 ```
 package main
