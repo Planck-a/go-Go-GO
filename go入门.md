@@ -10,6 +10,10 @@ import("fmt")
 
 func main(){
   var a[5]int
+  for i:=0;i < len(a);i++{
+     fmt.Println("请输入第%d个元素"，i+1)
+     fmt.Scanln(&a[i])  //从键盘接收字符，存到数组a中
+  }
   fmt.Println(a)
   fmt.Println(&a)  //数组的地址
   fmt.Println(&a[0])  //首元素的地址，等于&a
