@@ -4,12 +4,15 @@
 
 ## 数组
 1、**数组初始化的四种方式**
+
 未初始化的数组，数值类型默认`0`，布尔类型默认为`false`
 ```
 var a[3]int = [3]int {1,2,3}
 var a = [3]int {1,2,3}
 var a = [...]int {1,2,3}
 var a = [...]string {1:"love",0:"I",2:"U"}
+
+var a[]int   //这种方式是定义切片，即动态数组
 ```
 或者可以省略var，写成：
 ```
@@ -36,6 +39,8 @@ func main(){
 }
 ```
 3、**数组遍历for-range**
+
+数组遍历的时候，下标从0开始，越界会报panic
 ```
 var arr[3]int = [3]int {1,2,3}
 for index,value := range arr{
