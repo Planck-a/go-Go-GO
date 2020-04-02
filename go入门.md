@@ -55,9 +55,15 @@ func test01(a [3]int) //go语言中认为 [3]int 和 [4]int是两种不同的数
 {
    a[0]=1
 }
+func test02(a *[3]int){//指针做函数参数，可以改变形参指向地址空间中的内容
+   (*a)[0]=1
+}
 func main(){
   a:=[3]int{0,0,2}
   test01(a)//数组是值传递，所以函数中和主函数中是两份地址空间，互不影响
+  fmt.Println(a)
+  
+  test02(&a)
   fmt.Println(a)
 }
 ```
