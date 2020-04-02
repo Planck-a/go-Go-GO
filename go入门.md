@@ -49,6 +49,18 @@ for index,value := range arr{
    //index,value名称不固定，可自行定义
 }
 ```
+4、**数组做函数参数进行传递**
+```
+func test01(a [3]int) //go语言中认为 [3]int 和 [4]int是两种不同的数据类型
+{
+   a[0]=1
+}
+func main(){
+  a:=[3]int{0,0,2}
+  test01(a)//数组是值传递，所以函数中和主函数中是两份地址空间，互不影响
+  fmt.Println(a)
+}
+```
 ## 常见占位符
 **通用占位符**
 ```
