@@ -34,6 +34,15 @@ func main(){
   fmt.Println(&a[1])  //第二个元素的地址，相当于&a[0]+8，go语言int默认是int64，占8字节
 }
 ```
+3、**数组遍历for-range**
+```
+var arr[3]int = [3]int {1,2,3}
+for index,value := range arr{
+   //不需要index时，可以用_替代
+   //index,value是局部遍历，for循环外不可用
+   //index,value名称不固定，可自行定义
+}
+```
 ## 常见占位符
 **通用占位符**
 ```
