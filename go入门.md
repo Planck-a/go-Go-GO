@@ -10,5 +10,7 @@ import("fmt")
 func main(){
   var a[5]int
   fmt.Println(a)
+  fmt.Println(&a)  //数组的地址
+  fmt.Println(&a[0])  //首元素的地址，等于&a
 }
 ```
