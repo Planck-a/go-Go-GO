@@ -148,6 +148,7 @@ newsli := sl[1:3:4]
 ```
 * 表示从下标为i处开始切；切片的长度(j-i)，选取元素是`有左无右`；控制切片的容量(k-i)。如果没有给定 k，则表示切到底层数组的最尾部
 * newsli切片和s1切片`共享底层数组`，若newsli[0]=5，则对应s1[1]变为5了
+* 如果二次切片的容量>底层数组容量，报错panic: runtime error: slice bounds out of range
 
 3、**追加元素append()**
 ```
