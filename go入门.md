@@ -218,4 +218,8 @@ func main(){
 * 底层是切片，所以支持slice相关操作。
 * 不能直接通过索引s[2]='A'来修改字符串。如果要修改，需先进行string--->[]byte或者[]rune，然后再进行编辑，再转成string
 ```
+s1:="wodojwd"
+a1 := []byte(s1)
+a1[2]='A'
+s1 = string(a1)
 ```
