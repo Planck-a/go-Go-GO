@@ -186,6 +186,8 @@ myFruit = append(myFruit, "Kiwi") //此时append()的话，会直接创建一个
 num1 := []int{1, 2}
 num2 := []int{3, 4}
 fmt.Printf("%v\n", append(num1, num2...))  // 将两个切片追加在一起，并显示结果
+
+num2 = append(num2,num2)  //num2追加到自身
 ```
 * 底层实现机制是怎样的？
 
