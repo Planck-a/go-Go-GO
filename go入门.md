@@ -259,7 +259,7 @@ s1 = string(a1)
  a[1]="woaini"   //会报错panic:...is nil
  
  //1
-  var a map[int]string
+ var a map[int]string
  a=make(map[int]string,10)
  //2
  var a map[int]string=make(map[int]string,10)  //分配大小为10对key-value的空间
