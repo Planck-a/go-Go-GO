@@ -145,9 +145,9 @@ func main(){
 
 切片三要素：`类型(指针地址)、长度和容量`
 
-切片是通过指针地址访问`底层数组`的，底层数组是一个长度固定的数组，通过扩容机制实现动态数组的功效。相当于C++中vector的扩容机制。
-
-内置函数：`append()、len() 和 cap() `
+* 切片是通过指针地址访问`底层数组`的，底层数组是一个长度固定的数组，通过扩容机制实现动态数组的功效。相当于C++中vector的扩容机制。
+* 内置函数：`append()、len() 和 cap() `
+* 只声明是不分配内存的，用make创建才是分配内存后的
 ```
 s1 := make([]int, 5)   //其长度和容量都是 5 个元素
 s2 :=make([]int,3,5)   //其长度为 3 个元素，容量为 5 个元素
@@ -245,3 +245,12 @@ s1 = string(a1)
 1、**key可以是什么类型，不能是什么类型**
 * key可以是`数值`，`string`，布尔，指针，channel；也可以是这几种类型的接口、结构体和数组
 * key不可以是slice、map、function，因为这几种数据类型没法进行比较
+* value可以是各种类型，常用的是数值、string、map、struct
+
+2、**创建一个map**
+* 声明一个map并不会分配内存，初始化需要用`make`，分配内存后才可以复制并使用
+```
+ var a map[string]string
+ var a map[int]string
+ var map[string]map[string]string   //value仍然是个map
+```
