@@ -270,7 +270,8 @@ s1 = string(a1)
 a :=map[int]string{
  1:"abc",
  2:"fds"
-}  
+} 
+a[5]="adsds"//后续可以直接插入
 ```
 3、**key重复会怎样**
  * key重复的话，后面的会`覆盖`掉前面的。value可以重复
