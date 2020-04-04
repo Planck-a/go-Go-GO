@@ -94,7 +94,7 @@ func main(){
  
  for i,v := range(arr2){
   for j,v1 := range(v){
-   fmt.Println(arr2[i][j])    //或者打印v1
+   fmt.Println(“arr2[%d][%d]=%v",i,j,v1)    
   }
  }
 ```
