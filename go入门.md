@@ -260,4 +260,5 @@ s1 = string(a1)
  
  var a map[int]string=make(map[int]string,10)  //分配大小为10对key-value的空间
 ```
-
+3、**key重复会怎样**
+ key重复的话，后面的会`覆盖`掉前面的。value可以重复
