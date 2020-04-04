@@ -260,11 +260,14 @@ s1 = string(a1)
  
  //1
  var a map[int]string
- a=make(map[int]string,10)
+ a=make(map[int]string,10)  //通过make分配大小为10对key-value的空间
  //2
- var a map[int]string=make(map[int]string,10)  //分配大小为10对key-value的空间
+ a := make(map[int]string,10)
  //3
- var a = make(map[int]string,10)
+a :=map[int]string{
+ 1:"abc",
+ 2:"fds"
+}  
 ```
 3、**key重复会怎样**
  * key重复的话，后面的会`覆盖`掉前面的。value可以重复
