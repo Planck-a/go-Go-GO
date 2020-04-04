@@ -91,6 +91,12 @@ func main(){
  fmt.Println(arr2)   //打印数组，结果为[1,2,3][4,5,6]
  fmt.Println(arr2[0]) //打印第一行,结果为[1,2,3]
  fmt.Println(&arr2)  //数组首地址，数值上&arr2 == &arr2[0] == &arr2[0][0]
+ 
+ for i,v := range(arr2){
+  for j,v1 := range(v){
+   fmt.Println(arr2[i][j])    //或者打印v1
+  }
+ }
 ```
 
 
