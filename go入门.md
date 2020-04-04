@@ -248,9 +248,16 @@ s1 = string(a1)
 * value可以是各种类型，常用的是数值、string、map、struct
 
 2、**创建一个map**
-* 声明一个map并不会分配内存，初始化需要用`make`，分配内存后才可以复制并使用
 ```
  var a map[string]string
  var a map[int]string
  var map[string]map[string]string   //value仍然是个map
 ```
+* 声明一个map并不会分配内存，初始化需要用`make`，分配内存后才可以复制并使用
+```
+ var a map[int]string
+ a[1]="woaini"   //会报错panic:...is nil
+ 
+ var a map[int]string=make(map[int]string,10)  //分配大小为10对key-value的空间
+```
+
