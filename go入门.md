@@ -55,6 +55,7 @@ for index,value := range arr{
 }
 ```
 4、**数组做函数参数进行传递**
+* 数组是值传递，如果需要传地址，应写成*[3]int
 ```
 func test01(a [3]int) //go语言中认为 [3]int 和 [4]int是两种不同的数据类型
 {
