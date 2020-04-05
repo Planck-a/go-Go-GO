@@ -340,3 +340,17 @@ func changeM(m map[int64]int64) {
 * 去掉了传统OOP语言的继承、方法重载、构造和析构函数、隐藏this指针
 * 用struct实现面向对象特性
 * 仍然具有封装、继承、多态特性，只是实现方式不同
+
+2、**创建一个结构体**
+```
+type cat struct{
+    Name string
+    Age int
+    Color string
+}
+func main(){
+    var cat1 cat
+    cat1.Name="小王"
+    cat1.Age=5
+}
+```
