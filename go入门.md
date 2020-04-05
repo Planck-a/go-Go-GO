@@ -354,3 +354,8 @@ func main(){
     cat1.Age=5
 }
 ```
+* go中结构体是值类型，要获取地址要用&cat1
+```
+var cat1 cat
+fmt.Println("cat1的地址是：%p"，&cat1)
+```
