@@ -273,11 +273,7 @@ a :=map[int]string{
 } 
 a[5]="adsds"//后续可以直接插入
 ```
-3、**key重复会怎样**
- * key重复的话，后面的会`覆盖`掉前面的。value可以重复
- * key是无序的，与C++不同
-4、**删
-除、更新、查询**
+3、**删除、更新、查询**
 ```
 // 删除，key不存在则啥也不干
 delete(m, "name")
@@ -290,3 +286,25 @@ i := m["name"] // 三种查询方式，
 i, ok := m["name"]
 _, ok := m["name"]
 ```
+4、**遍历**
+ * key是无序的，与C++不同。在遍历的时候并不会按照你传入的顺序
+ ```
+ for k, v := range m { 
+    fmt.Println(k, v)
+}
+ ```
+ * 若要强制进行有序遍历，则需要先把key放在数值中进行排序
+ ```
+ import "sort"
+var keys []string
+// 把key单独抽取出来，放在数组中
+for k, _ := range m {
+    keys = append(keys, k)
+}
+// 进行数组的排序
+sort.Strings(keys)
+// 遍历数组就是有序的了
+for _, k := range keys {
+    fmt.Println(k, m[k])
+}
+ ```
