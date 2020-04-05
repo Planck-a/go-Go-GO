@@ -344,7 +344,7 @@ func changeM(m map[int64]int64) {
 2、**创建一个结构体**
 ```
 type cat struct{
-    Name string
+    Name string    //字段大写开头，表示可以被其他包所引用
     Age int
     Color string
 }
