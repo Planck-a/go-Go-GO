@@ -304,7 +304,7 @@ for k, _ := range m {
     keys = append(keys, k)
 }
 // 进行数组的排序
-sort.Strings(keys)
+sort.Strings(keys)  //int类型用 sort.Ints()
 // 遍历数组就是有序的了
 for _, k := range keys {
     fmt.Println(k, m[k])
