@@ -249,6 +249,7 @@ s1 = string(a1)
 * value可以是各种类型，常用的是数值、string、map、struct
 
 2、**创建一个map**
+* 声明一个map
 ```
  var a map[string]string
  var a map[int]string
@@ -270,7 +271,7 @@ s1 = string(a1)
  //3
 a :=map[int]string{
  1:"abc",
- 2:"fds"
+ 2:"fds"，//最后一组key-value后的","必不可少
 } 
 a[5]="adsds"//后续可以直接插入
 ```
