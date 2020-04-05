@@ -308,3 +308,27 @@ for _, k := range keys {
     fmt.Println(k, m[k])
 }
  ```
+5、**map作函数参数进行传递**
+* Golang中函数参数是没有引用传递的，均为值传递。也即是说传递的是数据的拷贝。
+* map本身就是个引用，指向的是一个数据结构(包括元素个数、扩容常量、数组指针地址等成员变量)
+* map作为形参或返回参数的时候，传递的是值(map变量的地址)的拷贝，即使发生扩容也不会改变这个地址。发生改变的map结构体中某个成员变量的值
+```
+var m map[int64]int64
+m = make(map[int64]int64, 1)
+fmt.Printf("m 原始的地址是：%p\n", m)  //m 原始地址是：0xc42007a180
+changeM(m)
+fmt.Printf("m 改变后地址是：%p\n", m)//m 改变后地址是：0xc42007a180
+fmt.Println("m 长度是", len(m))  //长度变为5
+fmt.Println("m 参数是", m)     //打印map[3:2 4:2 0:2 1:2 2:2]
+
+// 改变map的函数
+func changeM(m map[int64]int64) {
+	fmt.Printf("m 函数开始时地址是：%p\n", m) //m 函数开始时地址是：0xc42007a180
+	var max = 5
+	for i := 0; i < max; i++ {
+		m[int64(i)] = 2
+	}
+	fmt.Printf("m 在函数返回前地址是：%p\n", m) //m 在函数返回前地址是：0xc42007a180
+}
+
+```
