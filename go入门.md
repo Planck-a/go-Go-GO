@@ -344,6 +344,7 @@ func changeM(m map[int64]int64) {
 * 仍然具有封装、继承、多态特性，只是实现方式不同
 
 2、**创建一个结构体**
+* 声明了变量即分配了内存，不需要make
 ```
 type cat struct{
     Name string    //字段大写开头，表示可以被其他包所引用
@@ -356,11 +357,20 @@ func main(){
     cat1.Age=5
 }
 ```
-* go中结构体是值类型，要获取地址要用&cat1
+* go中结构体是值类型，同理作函数参数传递时也是传值。要获取地址要用&cat1
 ```
 var cat1 cat
 fmt.Println("cat1的地址是：%p"，&cat1)
 ```
+* 创建一个结构体指针变量
+```
+var cat1 cat
+cat1.Name="小王"
+var cat_ptr *cat=cat1
+```
+* 获取变量中成员函数，用cat1.变量 或则 cat_ptr.变量
+* 变量不能设置访问权限，相当于都是C++的public
+
 3、**结构体变量中字段的使用注意事项**
 * 结构体变量中若有map和切片，仍要遵从先make，再使用
 * 结构体变量在内存中是连续分布的
