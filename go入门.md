@@ -382,8 +382,21 @@ var cat_ptr *cat=cat1
 
 3、**结构体变量中字段的使用注意事项**
 * 结构体变量中若有map和切片，仍要遵从先make，再使用
-* 结构体变量在内存中是连续分布的
-* 如果有两个连续的字段都是指针类型，那么这两个指针的地址连续，但是两个指针指向的地方不一定连续
+* 结构体变量在内存中是连续分布的。如果有两个连续的字段都是`指针类型`，那么这`两个指针的地址连续`，但是两个指针指向的地方不一定连续
+* 字段可以加tag，场景是序列化和反序列时。比如现在类中变量的Name，是个公有变量。但是我在传递给客户端时，了解到客户端希望接收的小写的name，那么在不破坏公有属性的前提下，可以加tag
+```
+type Monster struct{
+	Name string'json:"name"'   //附加一个tag，那么在json时可以自动转换为小写的
+	Age int'json:"age"'
+	Skill string'json:"skill"'
+}
+func main(){
+	mon1 := Monster{"牛魔王"，100，"芭蕉扇"}
+	jsonstr,_= json.Marshall(mon1) //Marshall返回 ([]byte,int)
+	fmt.Println(string(jsonstr)) //复习，[]byte转字符串函数，string()
+	//打印出就是name:"牛魔王"，age：100,skill:"芭蕉扇"
+}
+```
 
 4、**结构体默认的拷贝构造函数为值拷贝**
 ```
