@@ -355,12 +355,21 @@ func main(){
     var cat1 cat
     cat1.Name="小王"
     cat1.Age=5
+    
+    cat2 := cat{"小张"，10}
+    
+    cat3 := cat{
+    	Name:"小谢"，
+	age:5，
+    }
 }
 ```
 * go中结构体是值类型，同理作函数参数传递时也是传值。要获取地址要用&cat1
 ```
 var cat1 cat
 fmt.Println("cat1的地址是：%p"，&cat1)
+
+var cat_ptr=&cat{"小张"，10}
 ```
 * 创建一个结构体指针变量
 ```
