@@ -423,6 +423,8 @@ func NewPerson(name string)* person{
 	}
 }
 func (p *person) Setage(age int){
+//p *person为一个接收器，命名时建议使用接收器类型名的第一个小写字母
+//作用类似于面向对象的this
 	if age>0 && age<150{
 		p.age=age
 	}
