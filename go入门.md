@@ -408,7 +408,7 @@ func NewStudent(n string,s int) *student{
 ```
 6、**封装一个类**
 ```
-package 
+package model
 
 type  person struct{
 	Name string
@@ -433,5 +433,20 @@ func (p *person) Setage(age int){
 }
 func (p *person) Getage()int{
 	return p.age
+}
+```
+* main函数中调用
+```
+package main
+import{
+	"fmt"
+	"go_code/chapter1/model"
+}
+
+func main(){
+	p:=model.NewPerson("smith")
+	p.SetAge(18)
+	age1 := p.getAge
+
 }
 ```
