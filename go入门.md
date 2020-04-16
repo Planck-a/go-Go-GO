@@ -406,3 +406,32 @@ func NewStudent(n string,s int) *student{
 	}
 }
 ```
+6、**封装一个类**
+```
+package 
+
+type  person struct{
+	Name string
+	age int
+	sal float64
+}
+
+//工程模式，相当于构造函数
+func NewPerson(name string)* person{
+	return &person{
+		Name:name,
+	}
+}
+func (p *person) Setage(age int){
+	if age>0 && age<150{
+		p.age=age
+	}
+	else{
+		fmt.Println("输入不满足要求")
+		//可以在此处给默认值
+	}
+}
+func (p *person) Getage()int{
+	return p.age
+}
+```
