@@ -435,6 +435,26 @@ func main(){
 }
 ```
 * 如果在同一个包中，或者两个包但是对公有的成员变量，可以直接p.Name来查看和修改。如果是两个包中查看私有变量，那么必须通过方法来实现
+* 接收者为值类型时，可以用指针来调用；同理当接收者为指针，也可以用值变量来调用
+```
+type Psrson struct{
+	Name string
+}
+func (p Person)test(){
+	fmt.Println("名字是：%v",p.name)
+}
+func (p *Person)test02(){
+	fmt.Println("名字是：%v",p.name)
+}
+func main(){
+	p :=Psrson{"tom"}
+	p.test() //正常调用
+	(&p).test()//也能正常调用
+	
+	p.test02()//正常
+	(*p).test02()//正常
+}
+```
 * 如果某个类定义了string()，那么fmt.Println()就会自动调用这个方法
 ```
 type Student struct{
