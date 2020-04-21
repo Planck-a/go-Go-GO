@@ -6,6 +6,7 @@
   * [string](#string)
   * [map](#map)(`哪些不能作key`)
   * [面向对象编程](#面向对象编程)(`重点`)
+  * [普通函数和成员函数方法的区别](#普通函数和成员函数方法的区别)
   
   
 ## 数组
@@ -531,5 +532,34 @@ func main(){
 	p.SetAge(18)
 	age1 := p.getAge
 
+}
+```
+
+## 普通函数和成员函数方法的区别
+
+1、**调用方式不同**
+
+2、**调用者和接收者的匹配程度要求不同**
+
+* 结构体： 接收者为值类型时，可以用指针来调用；同理当接收者为指针，也可以用值变量来调用
+* 函数 ：只能对应调用
+
+```
+type Psrson struct{
+	Name string
+}
+func (p Person)test(){
+	fmt.Println("名字是：%v",p.name)
+}
+func (p *Person)test02(){
+	fmt.Println("名字是：%v",p.name)
+}
+func main(){
+	p :=Psrson{"tom"}
+	p.test() //正常调用
+	(&p).test()//也能正常调用，语句看似引用传递，其实内部还是值传递
+	
+	p.test02()//正常
+	(*p).test02()//正常，内其实部还是引用传递
 }
 ```
