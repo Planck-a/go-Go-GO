@@ -435,6 +435,25 @@ func main(){
 }
 ```
 * 如果在同一个包中，或者两个包但是对公有的成员变量，可以直接p.Name来查看和修改。如果是两个包中查看私有变量，那么必须通过方法来实现
+* 如果某个类定义了string()，那么fmt.Println()就会自动调用这个方法
+```
+type Student struct{
+	Name string
+	Age int
+}
+func (stu *Student)String() string{
+	str :=fmt.Println("name = [%v],Age=[%v]",stu.Name,stu.Age) 
+	return str
+}
+
+func main(){
+	stu := Student{
+		Name : "Tom",
+		Age : 20,
+	}
+	fmt.Println(&stu)  //会打印name=[Tom],Age=[20]
+}
+```
 
 6、**golang没有构造函数，用工厂模式来实现**
 * 场景1：在a包中定义一个student类，首字母小写导致在其他包用不了。那么如果在其他包要怎么调用呢？
