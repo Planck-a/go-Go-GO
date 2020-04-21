@@ -449,10 +449,10 @@ func (p *Person)test02(){
 func main(){
 	p :=Psrson{"tom"}
 	p.test() //正常调用
-	(&p).test()//也能正常调用
+	(&p).test()//也能正常调用，语句看似引用传递，其实内部还是值传递
 	
 	p.test02()//正常
-	(*p).test02()//正常
+	(*p).test02()//正常，内其实部还是引用传递
 }
 ```
 * 如果某个类定义了string()，那么fmt.Println()就会自动调用这个方法
