@@ -488,7 +488,8 @@ func NewStudent(n string,s int) *student{
 	}
 }
 ```
-6、**封装一个类**
+7、**封装一个类**
+* 场景：定义一个person私有的类，类的属性和方法均为私有。将person这个类及方法封装在model包中，供main包调用
 ```
 package model
 
@@ -534,6 +535,8 @@ func main(){
 
 }
 ```
+8、**继承**
+
 
 ## 普通函数和成员函数方法的区别
 
