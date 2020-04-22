@@ -654,7 +654,20 @@ func main(){
 ```
 2、**通用实现**
 * Java中实现接口必须显示地指出实现了哪个接口，type A struct implement B。而go是基于方法的，只要实现了这个接口的所有函数，就实现了接口，不要特别指出是实现了哪个接口。
+
+3、**sort函数**------>`重要例子`
 ```
+type Interface interface{
+	Len() int
+	Less(i,j int)bool
+	Swap(i,j int)
+}
+
+func sort(n Interface){
+//对于这个函数而言，接收一个Interface接口，实现排序
+//对传入的参数，要求必须是struct，同时必须实现了上述3个方法
+}
+
 ```
 
 ## 普通函数和成员函数方法的区别
