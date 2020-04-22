@@ -666,10 +666,37 @@ type Interface interface{
 
 func sort(n Interface){
 //对于这个函数而言，接收一个Interface接口，实现排序
-//对传入的参数，要求必须是struct，同时必须实现了上述3个方法
+//对传入的参数，要求必须是struct吗？？不一定，但是必须同时实现上述3个方法
 }
 
 ```
+
+4、**实现接口的不一定是struct，可以是任意类型**
+```
+type Interface interface{
+	Start()
+}
+
+//任意类型都可以实现接口
+type Inter int
+func (i Inter)Start(){
+	fmt.Println(" 111 ")
+}
+
+func test(Interface interface){
+	Interface.Start()
+}
+
+func main(){
+	var i Inter
+	var in Interface = i
+	in.Start()
+	
+	//或者通过函数调用
+	test(i)
+}
+```
+5、**一个自定义类型可以实现多个接口**
 
 ## 普通函数和成员函数方法的区别
 
