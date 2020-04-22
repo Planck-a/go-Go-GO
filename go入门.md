@@ -538,13 +538,27 @@ func main(){
 8、**继承**
 * 将多个结构体的公共部分抽象为父类，在子类结构体中嵌入父类的`匿名结构体`，便实现继承特性
 ```
-type Goods struct{
+type Student struct{
 	Name string
-	Price int
+	Age int
+	Score int
 }
-type Book struct{
-	Goods
-	Write string 
+func (p *Student)Setscore(n int){
+	p.Score=n
+}
+type Pupil struct{
+	Student
+	score int 
+}
+func (p *Pupil)tset(){
+	fmt.Println("小学生写作业")
+}
+func main(){
+	pupil :=&Pupil{}
+	pupil.Student.Name="tom"  //通过匿名结构体对成员变量幅值
+	pupil.Student.Age=8
+	pupil.tset()
+	pupil.Student.Setscore(70)
 }
 ```
 
