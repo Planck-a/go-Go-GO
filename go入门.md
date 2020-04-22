@@ -7,6 +7,7 @@
   * [map](#map)(`哪些不能作key`)
   * [面向对象编程](#面向对象编程)(`重点`)
   * [普通函数和成员函数方法的区别](#普通函数和成员函数方法的区别)
+  * [接口interface](#接口interface)
   
   
 ## 数组
@@ -595,7 +596,58 @@ func main(){
 	b.a.Name="tom"  //正确
 }
 ```
-9、**接口interface**
+## 接口interface
+1、**定义一个接口,实现多态特性**
+```
+//定义接口，定义一种规范。高内聚低耦合
+type Usb interface{
+	Start()
+	Stop()
+}
+
+
+
+type Phone struct{
+	
+}
+func (p Phone)Start(){
+	fmt.Println("手机工作")	
+}
+func (p Phone)Stop(){
+	fmt.Println("手机停止工作")	
+}
+
+
+
+
+type Camera struct{
+	
+}
+func (p Camera)Start(){
+	fmt.Println("相机工作")	
+}
+func (p Camera)Stop(){
+	fmt.Println("相机停止工作")	
+}
+
+type Computer struct{  }
+//编写一个wirking方法，接收一个Usb类型的接口
+//只要实现了接口的，即实现了接口的所有函数，就可以调用这个函数
+func (c Computer)Working(u Usb){
+	u.Start()
+	u.Stop()
+}
+
+
+func main(){
+	computer :=Computer{}
+	phone := Phone{}
+	camera :=Camera{}
+	
+	computer.Working(phone)
+	computer.Working(camera)
+}
+```
 
 
 ## 普通函数和成员函数方法的区别
