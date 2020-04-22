@@ -536,7 +536,17 @@ func main(){
 }
 ```
 8、**继承**
-
+* 将多个结构体的公共部分抽象为父类，在子类结构体中嵌入父类的`匿名结构体`，便实现继承特性
+```
+type Goods struct{
+	Name string
+	Price int
+}
+type Book struct{
+	Goods
+	Write string 
+}
+```
 
 ## 普通函数和成员函数方法的区别
 
