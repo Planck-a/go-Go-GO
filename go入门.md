@@ -536,7 +536,7 @@ func main(){
 }
 ```
 8、**继承**
-* 将多个结构体的公共部分抽象为父类，在子类结构体中嵌入父类的`匿名结构体`，便实现继承特性
+* 将多个结构体的公共部分抽象为父类，在子类结构体中嵌入父类的`匿名结构体`，便实现继承特性。同时匿名结构体可以是指针类型，这样效率更高
 ```
 type Student struct{
 	Name string
@@ -548,7 +548,7 @@ func (p *Student)Setscore(n int){
 }
 type Pupil struct{
 	Student
-	score int 
+	femal String
 }
 func (p *Pupil)tset(){
 	fmt.Println("小学生写作业")
@@ -559,6 +559,17 @@ func main(){
 	pupil.Student.Age=8
 	pupil.tset()
 	pupil.Student.Setscore(70)
+	
+	//初始化的另一种方法
+	pupil :=&Pupil{
+		Student{"tom",8,70},
+		"男"，
+		}
+	//如果初始化指针类型的匿名结构体
+	pupil :=&Pupil{
+		&Student{"tom",8,70},    //此处换成&Student{"tom",8,70}
+		"男"，
+		}
 }
 ```
 * 子类结构体可以使用父类`所有的字段和方法`，不论大小写
@@ -584,6 +595,7 @@ func main(){
 	b.a.Name="tom"  //正确
 }
 ```
+* 
 
 ## 普通函数和成员函数方法的区别
 
