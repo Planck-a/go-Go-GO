@@ -601,6 +601,31 @@ func main(){
 
 9、**多态**
 * 多态参数和多态数组
+```
+
+type Usb interface{
+	Start()
+}
+
+type Phone Struct{ }
+func (p Phone)Start(){
+ 
+}
+
+type Camera Struct{ }
+func (c Camera)Start(){
+ 
+}
+
+func main(){
+	var usbArr [3]Usb  //定义多态数组，既可以存放Phone变量，也可以存放Camera变量
+	usbArr[0]=Phone{}
+	usbArr[1]=Phone{}
+	usbArr[2]=Camera{}
+}
+```
+
+
 
 ## 接口interface
 1、**定义一个接口,实现多态特性**
