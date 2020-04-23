@@ -702,13 +702,17 @@ type Point struct{
  
  ```
  func TypeJudge(items...interface{}){
- 	for _,v := range items{
+ 	for i,v := range items{
  	switch v.(type){
 		case bool :
 		
 		case float32:
 		
 		case int,int32,int64:
+		
+		//自定义数据类型
+		case Student:
+		
 		
 		default:
 			fmt.Println("没有匹配的类型")
