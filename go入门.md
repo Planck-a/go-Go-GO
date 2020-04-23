@@ -644,6 +644,38 @@ type Point struct{
 
 ```
 
+* 带判断的断言
+```
+type Point struct{
+	x int
+	y int
+}
+ func main(){
+ 	var a interface{} //空接口，可以用来接收所有的参数
+	var p1 Point = Point{1,2}
+	a = p1 //实现了接口方法的类变量可以赋值给接口
+	var p2 Point =a  //空接口不能直接对类变量赋值
+	
+	p2,ok ：=a.(float64)   
+	if ok == true{
+		fmt.Println("转换成功")
+		fmt.Println(p2)
+	}
+	else{
+		fmt.Println("转换失败")
+	}
+	
+	//简洁写法
+	if p2,ok ：=a.(float64); ok {
+		fmt.Println("转换成功")
+		fmt.Println(p2)
+	}
+	else{
+		fmt.Println("转换失败")
+	}
+	
+ }
+
 
 
 ## 接口interface
