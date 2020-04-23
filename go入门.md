@@ -637,7 +637,7 @@ type Point struct{
 	a = p1 //实现了接口方法的类变量可以赋值给接口
 	var p2 Point =a  //空接口不能直接对类变量赋值
 	
-	var p2 Point =a.(Point)   //断言，用来将空接口转为变量
+	var p2 Point =a.(Point)   //断言，判断a是否确实指向Point类型，如果是就转，不是就放弃
 	fmt.Println(p2)
 	
  }
