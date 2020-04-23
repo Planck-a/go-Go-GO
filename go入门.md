@@ -729,6 +729,9 @@ func (hs HeroSlice) Swap(i,j int) {
 	tmp := hs[i]
 	hs[i] = hs[j]
 	hs[j] = tmp
+	
+	//更简洁的写法
+	hs[i],hs[j] = hs[j],hs[i]
 }
 
 func main(){
