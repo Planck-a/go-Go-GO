@@ -697,6 +697,26 @@ type Point struct{
 	}
 	
  }
+ ```
+ 3、编写函数，配合switch-case 来实现传入参数判断
+ 
+ ```
+ func TypeJudge(items...interface{}){
+ 	for _,v := range items{
+ 	switch v.(type){
+		case bool :
+		
+		case float32:
+		
+		case int,int32,int64:
+		
+		default:
+			fmt.Println("没有匹配的类型")
+	}
+ }
+ }
+ 
+ ```
 
 
 
