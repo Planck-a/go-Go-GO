@@ -150,6 +150,8 @@ func main(){
 
 切片三要素：`类型(指针地址)、长度和容量`
 
+* 切片是引用类型
+
 * 切片是通过指针地址访问`底层数组`的，底层数组是一个长度固定的数组，通过扩容机制实现动态数组的功效。相当于C++中vector的扩容机制。
 * 内置函数：`append()、len() 和 cap() `
 * 只声明是不分配内存的，用make创建才是分配内存后的。`切片make后才可以使用`
@@ -697,6 +699,61 @@ func main(){
 }
 ```
 5、**一个自定义类型可以实现多个接口**
+
+6、**hero切片的排序**
+```
+/*
+type Interface interface{
+	Len() int
+	Less(i,j int)bool
+	Swap(i,j int)
+}*/
+
+//1、声明hero结构体
+type Hero struct{
+	Name String
+	Age int
+}
+
+//2、声明一个hero切片
+type HeroSlice []Hero
+
+//3、实现方法
+func (hs HeroSlice) Len() int {
+	return len(hs)
+}
+func (hs HeroSlice) Less(i,j int) bool {
+	return hs[i].Age > hs[j].Age
+}
+func (hs HeroSlice) Swap(i,j int) {
+	tmp := hs[i]
+	hs[i] = hs[j]
+	hs[j] = tmp
+}
+
+func main(){
+	var intSlice = []int{0,-1,10,7,100}
+	//要求对切片进行排序1、冒泡排序   2、系统函数sort
+	sort.Ints(intSlice)  //切片是引用类型，所有传变量名即可
+	
+	//利用sort对结构体变量进行排序
+	var hs HeroSlice
+	for i:=0;i<10;i++{
+		hero :=Hero{
+			Name : fmt.Println(rand.Intn(100)),
+			Age : rand.Intn(100)
+		}
+		hs = append(hs,hero)
+	}
+	for _,v := range hs {
+		fmt.Println(v)
+	}
+	sort.Sort(hs)
+	for _,v := range hs {
+		fmt.Println(v)
+	}
+}
+```
 
 ## 普通函数和成员函数方法的区别
 
