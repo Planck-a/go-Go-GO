@@ -624,6 +624,25 @@ func main(){
 	usbArr[2]=Camera{}
 }
 ```
+* 类型`断言assert`:实现了接口方法的类变量可以赋值给接口，那么空接口怎么给类变量赋值？
+
+```
+type Point struct{
+	x int
+	y int
+}
+ func main(){
+ 	var a interface{} //空接口，可以用来接收所有的参数
+	var p1 Point = Point{1,2}
+	a = p1 //实现了接口方法的类变量可以赋值给接口
+	var p2 Point =a  //空接口不能直接对类变量赋值
+	
+	var p2 Point =a.(Point)   //断言，用来将空接口转为变量
+	fmt.Println(p2)
+	
+ }
+
+```
 
 
 
