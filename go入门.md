@@ -269,6 +269,15 @@ s1 = string(a1)
 ```
 * 转为byte可以修改英文和数字，但是不能改变中文。因为中文占3字节，所以中文的话应该转为rune，兼容汉字
 
+2、string的拼接:fmt.Sprintf
+```
+	var de string
+	fmt.Scanfln(&money)
+	balance+=money //余额balance
+	fmt.Scanfln(&note)
+	de += fmt.Sprintf("\n收入\t%v\t%v\t%v",balance,money,note)
+```
+
 ## map
 1、**key可以是什么类型，不能是什么类型**
 * key可以是`数值`，`string`，布尔，指针，channel；也可以是这几种类型的接口、结构体和数组
