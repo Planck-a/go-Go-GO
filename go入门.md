@@ -10,6 +10,7 @@
   * [普通函数和成员函数方法的区别](#普通函数和成员函数方法的区别)
   * [接口interface](#接口interface)
   * [类型断言assert](#类型断言assert)(`判断传入参数的类型` `多态数组的遍历`)
+  * [反射reflection](#反射reflection)
   
   
 
@@ -915,6 +916,46 @@ func main(){
 	sort.Sort(hs)
 	for _,v := range hs {
 		fmt.Println(v)
+	}
+}
+```
+
+7、**空接口**
+```
+func TypeJudge(items interface{}){
+ 	for i,v := range items{
+ 	switch v.(type){
+		case bool :
+		
+		case float32:
+		
+		case int,int32,int64:
+		
+		//自定义数据类型
+		case Student:
+		
+		
+		default:
+			fmt.Println("没有匹配的类型")
+	}
+ }
+```
+
+## 反射reflection
+
+* **用于获取某个类型的所有字段信息**
+
+```
+func Info(o interface{}){
+	t := reflect.Typeof(o)
+	fmt.Println("Type:",t.Name())
+	
+	v :=reflect.Valueof(o)
+	for i:=0;i< t.NumField;i++{
+		f := t.Field(i)  
+		t1 := f.Name()   //字段名   reflect.Typeof(o).Field(i).Name() 
+		t2 := f.Type()     //字段的数据类型  reflect.Typeof(o).Field(i).Type() 
+		val := v.Field(i).Interface()  //字段的值  reflect.Valueof(o) .Field(i).Interface()
 	}
 }
 ```
