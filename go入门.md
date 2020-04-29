@@ -951,11 +951,17 @@ func Info(o interface{}){
 	fmt.Println("Type:",t.Name())
 	
 	v :=reflect.Valueof(o)
-	for i:=0;i< t.NumField;i++{
+	for i:=0;i< t.NumField();i++{
 		f := t.Field(i)  
 		t1 := f.Name()   //字段名   reflect.Typeof(o).Field(i).Name() 
 		t2 := f.Type()     //字段的数据类型  reflect.Typeof(o).Field(i).Type() 
 		val := v.Field(i).Interface()  //字段的值  reflect.Valueof(o) .Field(i).Interface()
+	}
+	
+	for i:=0;i< t.NumMethod();i++{
+		m := t.Method()
+		t1 := m.Name()  //方法的名字
+		t2 := m.Type()   //方法的类型
 	}
 }
 ```
