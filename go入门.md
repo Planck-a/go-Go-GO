@@ -944,6 +944,7 @@ func TypeJudge(items interface{}){
 ## 反射reflection
 
 * **获取某个Struct变量的所有字段信息**
+  * reflect.Typeof(o).Field(i).Name() 和 reflect.Valueof(o) .Field(i).Interface()
   * 可以获取成员变量的名、类型、值
   * 可以获取成员函数的名、类型
   * 只能反射Struct值类型，不能反射指针类型
@@ -974,10 +975,28 @@ func Info(o interface{}){
 }
 ```
 * **对于获取变量中匿名结构体的所有字段信息**
+  *  reflect.Typeof(m).FieldByIndex([]int{0.0})
   * 获取匿名结构体成员变量的名、类型、值
   * 获取匿名结构体成员函数的名、类型
   
   ```
+  type User struct{
+  	Id int
+	Name string
+	Age int
+  }
+  type Manger struct{
+  	User     //匿名结构体
+	Title string
+  }
+  func main(){
+  	m := Manger{
+		User{1,"ok",12},
+		Title: "CEO"
+	}
+	t:= reflect.Typeof(m)
+	fmt.Println("%v\n",t.FieldByIndex([]int{0.0}))   //{0,0}对应第1个匿名结构体的第一个字段，打印出id
+  }
   ```
 
 ## 普通函数和成员函数方法的区别
