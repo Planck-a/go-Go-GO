@@ -13,6 +13,13 @@
   * [反射reflection](#反射reflection)
   * [文件操作](#文件操作)
   
+
+## 文件操作
+1、**os.File 结构体**`
+```
+func Open(name string)(file *File,err error)
+func (f *File) Close() error
+ ``` 
   
 
 ## 循环控制
