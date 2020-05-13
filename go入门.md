@@ -299,6 +299,7 @@ s1 = string(a1)
 * key可以是`数值`，`string`，布尔，指针，channel；也可以是这几种类型的接口、结构体和数组
 * key不可以是slice、map、function，因为这几种数据类型没法进行比较
 * value可以是各种类型，常用的是数值、string、map、struct
+* 若value是空接口interface{}，那么这个value可以接收任意类型的数据
 
 2、**创建一个map**
 * 声明一个map
@@ -386,6 +387,27 @@ func changeM(m map[int64]int64) {
 }
 
 ```
+
+6、**vaule为空接口的实例**
+
+* value为interface{}，所以可以是任意类型的数据
+```
+func testMap(){
+	var a map[string]interface{}
+	//使用map需要make
+	 a = make(map[string]interface{})  
+	 a["name"]="红孩儿"
+	 a["age"] = 30
+	 a["address"] = "洪崖洞"
+
+	 data, err :=json.Marshal(&a)
+	 if err != nil{
+		fmt.Printf("序列化失败，err= %v",err)
+	}
+	fmt.Printf("序列化后的结果为：%v",string(data))
+}
+```
+
 ## 面向对象编程
 1、**特点**
 * 去掉了传统OOP语言的继承、方法重载、构造和析构函数、隐藏this指针
