@@ -86,7 +86,251 @@ func main(){
 	lock.Unlock()
 }
 ```
-4、****
+4、**管道介绍**
+* channel是线程安全的，操纵方式和队列一样，FIFO。管道不会自动扩容
+* 管道是有类型的，string类型的管道只能放string变量
+* 如果管道既要存int又要存string，而可以定义为空接口类型的。但是只读取时也必须类型断言地读，比较麻烦:var intchan chan interface{}
+```
+package main
+import "fmt"	
+
+func main(){
+
+	//创建存放三个int地管道,管道不会自动增长。当容量满了之后， 除非取出才能再插入
+	var intchan chan int
+	intchan = make(chan int,3)
+
+	fmt.Printf("%v\n",intchan)  //intchan是个引用，会打印出地址
+
+	intchan <- 10
+	num := 2020
+	intchan <- num
+
+	fmt.Printf("intchan len = %v  , cap = %v \n",len(intchan),cap(intchan)) 
+
+	//从队头取出元素,放在num2
+	num2 := <-intchan
+	fmt.Println(num2)
+	fmt.Printf("intchan len = %v  , cap = %v \n",len(intchan),cap(intchan))  
+
+	//从队头取出元素，丢弃不用
+	<-intchan
+	fmt.Printf("intchan len = %v  , cap = %v \n",len(intchan),cap(intchan)) 
+
+}
+```
+5、**interface{}管道**
+```
+package main
+
+import(
+	"fmt"
+)
+
+type Cat struct{
+	Name string
+	Age int
+}
+
+func main(){
+	
+	allchan := make(chan interface{},3)
+	allchan <- 10
+	allchan <-"Jack"
+	cat := Cat{"小花猫",5}
+	allchan <-cat
+
+	//如果希望获取管道中第三个元素，必须先将前两个推出去
+	<-allchan
+	<-allchan
+	newCat := <-allchan //从管道中取出来的是interface{}
+
+	fmt.Printf("newcat = %T,newcat = %v\n",newCat,newCat) //可以顺利打印出结构体变量
+
+	//fmt.Printf("newCat.Name = %v",newCat.Name),这种方法错误，编译通不过
+
+	//空接口不能直接取出结构体成员变量的值，必须先用类型断言转换为结构体变量
+	a:=newCat.(Cat)
+	fmt.Printf("newCat.Name = %v",a.Name)
+}
+```
+6、**多协程求素数**
+* 管道会有死锁问题，有个管道容量为5，如果程序判断只有写没有读，且写入的数据量>5，就会报错；但是只要有人在读管道，那么就不用担心死锁问题
+* 管道的特性：如果不关闭管道就读取，会因为阻塞而导致deaklock；close管道后，只能读，不能写
+* 管道是线程安全的，可以用来实现对全局变量的互斥访问
+
+```
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func putNum(intchan chan int){
+	for i:=1;i<=80000;i++{
+		intchan <- i    //虽然管道只有1000容量，但是只要有人在读管道，那么就不用担心死锁问题
+	}
+	close(intchan)
+}
+
+func isprime(intchan chan int,primechan chan int,exitchan chan bool){
+	var flag bool
+	for{
+		num,ok := <- intchan
+		if !ok{
+			//intchan 取不出东西了
+			break
+		}
+		flag = true
+		for i:=2;i< num ;i++{
+			if num % i ==0 {
+				//说明不是素数
+				flag = false
+				break
+			}
+		}
+		if(flag){
+			primechan <- num
+		}
+	}
+	fmt.Println("有一个协程因为取不出数据而关闭")
+	//此时不能直接关闭primechan
+	exitchan<- true
+}
+
+func main(){
+	start := time.Now().Unix()
+	intchan := make(chan int,1000)
+	primechan := make(chan int,20000)   //放入素数
+	//标识管道退出
+	exitchan := make(chan bool,4)
+
+	go putNum(intchan)
+	go isprime(intchan,primechan,exitchan)
+	go isprime(intchan,primechan,exitchan)
+	go isprime(intchan,primechan,exitchan)
+	go isprime(intchan,primechan,exitchan)
+	var end int64
+	go func (){
+		for i:=0;i<4;i++{
+			<- exitchan
+		}
+		//当取出四个结果，就可以放心地关闭管道 primechan
+		close(primechan)
+		end = time.Now().Unix()
+	}()
+	count :=1
+	for{
+		_,ok := <- primechan
+		if !ok{
+			break
+		}
+		//fmt.Printf("第%v个素数=%v \n",count,res)
+		count++
+
+	}
+	fmt.Println("协程消耗地时间为：",end-start)
+
+}
+```
+7、**管道的使用细节**
+* 01 子协程panic时希望主线程不受影响，通过defer+recover来实现
+```
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+//如果只是某个协程发生错误，通过defer+recover来解决
+//不会影响主线程
+
+func sayHello(){
+	for i:=0;i<10;i++{
+		time.Sleep(time.Second)
+		fmt.Println("hello world")
+	}
+}
+
+func test(){
+	//这里可以使用defer + recover来解决
+	defer func(){
+		if err := recover(); err != nil{
+			fmt.Println("协程发生错误",err)
+		}
+	}()
+
+	var mymap map[int]string
+	mymap[0]="golang"
+}
+
+func main(){
+	go sayHello()
+	go test()
+
+	time.Sleep(time.Second*5)
+
+
+}
+```
+* 02 使用select解决从管道取数据阻塞的问题
+	* 传统的方法在遍历管道时，如果不关闭管道就读取，会因为阻塞而导致deaklock；所以要先close，后读取
+	* 但是如果实际开发不确定什么时候关闭管道，可以用select解决
+```
+package main
+import (
+	"fmt"
+	"time"
+)
+func main(){
+	//使用select解决从管道取数据阻塞的问题
+
+	intchan := make(chan int,10)
+	for i:=0;i<10;i++{
+		intchan <- i
+	}
+
+	stringchan := make(chan string , 5)
+	for i:=0;i < 5;i++{
+		stringchan <- "hello"+fmt.Sprintf("%d",i)
+	}
+
+	//传统的方法在遍历管道时，如果不关闭管道就读取，会因为阻塞而导致deaklock
+	//如果实际开发不确定什么时候关闭管道，用select解决
+	for{
+		select{
+			//注意：如果这里取不到，会自动跳到下个case
+			case v:= <- intchan:
+				fmt.Printf("intchan读到的数据为：%d\n",v)
+				time.Sleep(time.Second)
+			case v:= <- stringchan:
+				fmt.Printf("stringchan读到的数据为：%s\n",v)
+				time.Sleep(time.Second)
+			default:
+				fmt.Println("都读不到数据")
+				time.Sleep(time.Second)
+				break
+		}
+	}
+}
+```
+* 03 只读和只写管道
+```
+package main
+import "fmt"	
+func main(){
+	//声明为只写，类型仍然是chan int，只是某个属性修改
+	var chan2 chan<- int   
+	chan2 = make (chan int,3)
+	chan2 <- 1
+	
+	//声明为只读
+	var chan3 <-chan int
+	num2 ：= <-chan3
+}
+```
 
 ## 文件操作
 1、**os.File 结构体**`
