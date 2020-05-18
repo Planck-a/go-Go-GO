@@ -13,7 +13,46 @@
   * [反射reflection](#反射reflection)
   * [文件操作](#文件操作)
   * [协程goroutine](#协程goroutine)
+  * [异常处理机制](#异常处理机制)
   
+## 异常处理机制
+* 子协程panic时希望主线程不受影响，通过defer+recover来实现
+```
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func sayHello(){
+	for i:=0;i<10;i++{
+		time.Sleep(time.Second)
+		fmt.Println("hello world")
+	}
+}
+
+func test(){
+	//这里可以使用defer + recover来解决
+	defer func(){
+		if err := recover(); err != nil{
+			fmt.Println("协程发生错误",err)
+		}
+	}()
+
+	var mymap map[int]string
+	mymap[0]="golang"
+}
+
+func main(){
+	go sayHello()
+	go test()
+
+	time.Sleep(time.Second*5)
+
+
+}
+```
 ## 协程goroutine
 1、**获取计算机的CPU数目**
 ```
