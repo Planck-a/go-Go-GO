@@ -1,5 +1,5 @@
 * **go语言进阶提纲**
-  * [go测试框架testing](#go测试框架testing) (`必背` )
+  * [go测试框架testing](#go测试框架testing) (`` )
   * [map的深入了解](#map的深入了解)
 
 
