@@ -972,6 +972,68 @@ func TypeJudge(items interface{}){
 ```
 
 ## 反射reflection
+* reflect中interface{}，变量和reflect.Value是可以相互转换的
+
+func Test(o interface{})        //变量----->interface{}
+{
+	rval := reflect.ValueOf(o)   //interface{}--->value
+	ival := rval.Interface()     //vaule----->interface{}
+	vval := ival.(Student)       //interface{}---->Student变量 类型断言
+}
+
+1、**对于基本数据类型**
+```
+func reflectTest01(b interface{}){
+	//通过反射获取传入的变量的 type ， kind
+	//1.获取到reflect.Type
+	rTyp := reflect.TypeOf(b)
+	fmt.Println("rType = ",rTyp)
+	fmt.Println("rType = ",rTyp.Name())
+
+	//2.获取reflect.Value
+	rVal := reflect.ValueOf(b)
+	fmt.Printf("type = %T,rVal=%v\n",rVal,rVal)
+
+	//n2:= rVal+100  rVal并不仅仅是int，所以这样加会报错
+	n2:= rVal.Int()+100
+	fmt.Println(n2)
+
+	//3.将 rval转成interface{},并通过断言转为需要的类型
+	iv := rVal.Interface()
+	num2 := iv.(int)
+	fmt.Println(num2)
+	
+}
+```
+
+2、**对于结构体变量**
+```
+type Student struct{
+	Name string
+	Age int
+}
+
+func reflectTest02(b interface{}){
+	//1.获取到reflect.Type
+	rTyp := reflect.TypeOf(b)
+	fmt.Println("rType = ",rTyp)
+	fmt.Println("rType = ",rTyp.Name())
+
+	//2.获取reflect.Value
+	rVal := reflect.ValueOf(b)
+	fmt.Printf("type = %T,rVal=%v\n",rVal,rVal)
+
+	//3.将 rval转成interface{},并通过断言转为需要的类型
+	iv := rVal.Interface()
+	fmt.Printf("iv = %T,iv=%v\n",iv,iv)
+
+	//4.空接口不能直接访问结构体的成员变量，必须先通过类型断言进行转换
+	stu,ok := iv.(Student)
+	if ok{
+		fmt.Printf("stu.Name= %v\n",stu.Name)
+	}
+}
+```
 
 * **获取某个Struct变量的所有字段信息**
   * reflect.Typeof(o).Field(i).Name() 和 reflect.Valueof(o) .Field(i).Interface()
