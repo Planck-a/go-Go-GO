@@ -1442,7 +1442,7 @@ import(
 )
 func main(){
 	var str string = "tom"
-	fn := relect.ValueOf(str)
+	fn := reflect.ValueOf(str)
 	fn.SetString("isdaa")       //false
 	fn.Elem().SetString("isdaa")//true
 }
