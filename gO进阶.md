@@ -13,7 +13,8 @@
 * cmd上语句：go test -v
 * 如果文件中有多个_test.go的测试文件，但是只想测试一个，就必须显示地调用，go test -v cal_test.go cal.go
 * 只测单个函数：go test -v -test.run TestAddUpper
-```cal_test.go
+```
+//cal_test.go
 package cal
 import "testing"  //引入一个go testing的测试框架
 
@@ -27,7 +28,8 @@ func TestAddUpper(t *testing.T){
 	t.Logf("AddUpper()正确")
 }
 ```
-```sub_test.go  
+```
+//sub_test.go 
 package cal
 import(
 	
@@ -47,7 +49,8 @@ func TestGetSub(t *testing.T){
 
 }
 ```
-```cal.go
+```
+//cal.go
 package cal
 
 func addUpper(n int) int{
@@ -63,7 +66,8 @@ func getSub(n1 int,n2 int) int {
 }
 ```
 2、**序列化和反序列化结果测试**
-```monster_test.go
+```
+//monster_test.go
 package monster
 import(
 	"testing"	
@@ -82,7 +86,8 @@ func TestStore(t *testing.T){
 	}
 }
 ```
-```cal.go
+```
+//cal.go
 package monster
 import(
 	"encoding/json"
