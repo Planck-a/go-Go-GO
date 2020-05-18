@@ -1433,6 +1433,22 @@ func main(){
 	fmt.Println(n1)
 }
 ```
+4、**代码判断**
+```
+package main
+
+import(
+	"reflect"
+)
+func main(){
+	var str string = "tom"
+	fn := relect.ValueOf(str)
+	fn.SetString("isdaa")       //false
+	fn.Elem().SetString("isdaa")//true
+}
+```
+
+
 * **获取某个Struct变量的所有字段信息**
   * reflect.Typeof(o).Field(i).Name() 和 reflect.Valueof(o) .Field(i).Interface()
   * 可以获取成员变量的名、类型、值
