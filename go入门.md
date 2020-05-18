@@ -1035,9 +1035,9 @@ func reflectTest01(b interface{}){
 
 	//获取变量对应的kind
 	//（1）
-	fmt.Printf("kind = %v",rTyp.kind())
+	fmt.Printf("kind = %v",rTyp.Kind())
 	//(2)
-	fmt.Printf("kind = %v",rVal.kind())
+	fmt.Printf("kind = %v",rVal.Kind())
 
 	//n2:= rVal+100  rVal并不仅仅是int，所以这样加会报错
 	n2:= rVal.Int()+100
