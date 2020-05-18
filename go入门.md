@@ -1408,7 +1408,31 @@ func reflectTest01(b interface{}){
 	
 }
 ```
+3、**通过reflect.ValueOf(b).Elem()对形参进行修改**
+```
+package main
 
+import (
+	 "fmt"
+	 "reflect"
+)
+
+func reflect01(b interface{}){
+	rVal := reflect.ValueOf(b)  //rVal是个指针
+	fmt.Printf("类型是 = %v"，rVal.Kind())
+
+	// rVal.SetInt(20)//panic,因为rVal是地址
+
+	//3.rVal.Elem()获取指针指向的具体的空间
+	rVal.Elem().SetInt(20) //会直接修改原地址的值
+}
+
+func main(){
+	n1 := 1
+	reflect01(&n1)
+	fmt.Println(n1)
+}
+```
 * **获取某个Struct变量的所有字段信息**
   * reflect.Typeof(o).Field(i).Name() 和 reflect.Valueof(o) .Field(i).Interface()
   * 可以获取成员变量的名、类型、值
