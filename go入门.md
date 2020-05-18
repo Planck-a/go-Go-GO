@@ -1342,6 +1342,7 @@ func Test(o interface{})        //变量----->interface{}
 * 获取到reflect.Type
 * 获取reflect.Value
 * 将 rval转成interface{},并通过断言转为需要的类型
+* 传入一个int变量，如果要取出这个变量的值，必须通过 reflect.ValueOf(b).Int()
 
 ```
 func reflectTest01(b interface{}){
