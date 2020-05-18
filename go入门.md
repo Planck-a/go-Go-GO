@@ -981,7 +981,7 @@ func TypeJudge(items interface{}){
   
 ```
 func Info(o interface{}){
-	t := reflect.Typeof(o)
+	t := reflect.TypeOf(o)
 	fmt.Println("Type:",t.Name())
 	
 	if k:=t.Kind();k !=reflect.Struct{
@@ -989,7 +989,7 @@ func Info(o interface{}){
 		return
 	}
 	
-	v :=reflect.Valueof(o)
+	v :=reflect.ValueOf(o)
 	for i:=0;i< t.NumField();i++{
 		f := t.Field(i)  
 		t1 := f.Name()   //字段名   reflect.Typeof(o).Field(i).Name() 
