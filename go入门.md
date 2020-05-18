@@ -12,7 +12,81 @@
   * [类型断言assert](#类型断言assert)(`判断传入参数的类型` `多态数组的遍历`)
   * [反射reflection](#反射reflection)
   * [文件操作](#文件操作)
+  * [协程goroutine](#协程goroutine)
   
+## 协程goroutine
+1、**获取计算机的CPU数目**
+```
+import(
+	"fmt"
+	"runtime"
+)
+func main(){
+	cupNum := runtime.NumCPU()
+	fmt.Println("CUP数目=",cupNum)
+
+	//设置程序实际运行中使用的CPU数目
+	runtime.GOMAXPROCS(cupNum-1) 
+}
+```
+2、**开启协程示例**
+* c/c++的线程是内核态的，比较耗资源；go语言的协程是逻辑态的，相比起线程会更轻便，可以轻松开启上万个协程
+* go语言中协程的工作模式为MPG：M是主线程  P是协程执行需要的上下文  G是协程
+```
+func test(){
+	for i :=0;i<10;i++{
+		fmt.Println("test () hello,world "+strconv.Itoa(i))
+		time.Sleep(time.Second)
+	}
+}
+
+func main(){
+	go test() //开启了协程
+	for i :=0;i<10;i++{
+		fmt.Println("main () hello,world "+strconv.Itoa(i))
+		time.Sleep(time.Second)
+	}
+	//注意：以主线程为准！主线程一旦执行完毕，即使协程没完成，程序也结束
+}
+```
+3、**协程中的互斥锁**
+* 需求：计算1-200 的各个数的阶乘，并把结果放在全局变量map中
+* 利用全局的互斥锁sync.Mutex，实现安全地共享
+```
+package main
+
+import (
+	"fmt"
+	"time"
+	"sync" //提供了基本的同步工具，如互斥锁
+)
+var (
+	myMap = make(map[int]int,10)   
+	lock sync.Mutex
+)
+func cal(n int){
+	res :=1
+	for i:=1;i<=n ;i++{
+		res *= i
+	}
+	lock.Lock()
+	myMap[n] = res
+	lock.Unlock()
+}
+func main(){
+	//开启多个协程完成任务
+	for i:=1;i<= 200; i++ {
+		go cal(i)
+	}
+	time.Sleep(time.Second * 10)
+	lock.Lock()
+	for i:=1;i<= 200; i++ {
+		fmt.Printf("map[%v]=%v\n",i,myMap[i])
+	}
+	lock.Unlock()
+}
+```
+4、****
 
 ## 文件操作
 1、**os.File 结构体**`
