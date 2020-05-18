@@ -982,6 +982,10 @@ func Test(o interface{})        //变量----->interface{}
 }
 
 1、**对于基本数据类型**
+* 获取到reflect.Type
+* 获取reflect.Value
+* 将 rval转成interface{},并通过断言转为需要的类型
+
 ```
 func reflectTest01(b interface{}){
 	//通过反射获取传入的变量的 type ， kind
@@ -1007,13 +1011,19 @@ func reflectTest01(b interface{}){
 ```
 
 2、**对于结构体变量**
+* 获取到reflect.Type
+* 获取reflect.Value
+* 获取变量对应的kind
+* 将 rval转成interface{},并通过断言转为需要的类型
+
 ```
 type Student struct{
 	Name string
 	Age int
 }
 
-func reflectTest02(b interface{}){
+func reflectTest01(b interface{}){
+	//通过反射获取传入的变量的 type ， kind(更大的范畴)
 	//1.获取到reflect.Type
 	rTyp := reflect.TypeOf(b)
 	fmt.Println("rType = ",rTyp)
@@ -1023,15 +1033,21 @@ func reflectTest02(b interface{}){
 	rVal := reflect.ValueOf(b)
 	fmt.Printf("type = %T,rVal=%v\n",rVal,rVal)
 
+	//获取变量对应的kind
+	//（1）
+	fmt.Printf("kind = %v",rTyp.kind())
+	//(2)
+	fmt.Printf("kind = %v",rVal.kind())
+
+	//n2:= rVal+100  rVal并不仅仅是int，所以这样加会报错
+	n2:= rVal.Int()+100
+	fmt.Println(n2)
+
 	//3.将 rval转成interface{},并通过断言转为需要的类型
 	iv := rVal.Interface()
-	fmt.Printf("iv = %T,iv=%v\n",iv,iv)
-
-	//4.空接口不能直接访问结构体的成员变量，必须先通过类型断言进行转换
-	stu,ok := iv.(Student)
-	if ok{
-		fmt.Printf("stu.Name= %v\n",stu.Name)
-	}
+	num2 := iv.(int)
+	fmt.Println(num2)
+	
 }
 ```
 
