@@ -15,6 +15,19 @@
   * [协程goroutine](#协程goroutine)
   * [异常处理机制](#异常处理机制)
   
+## 入门语法
+* 从控制台输入
+```
+fmt.Scanf("%d\n",&key)
+fmt.Scanf("%s\n",&userPwd)
+```
+* 带判断的死循环
+```
+for flag{ 
+
+}
+```
+  
 ## 异常处理机制
 * 子协程panic时希望主线程不受影响，通过defer+recover来实现
 ```
